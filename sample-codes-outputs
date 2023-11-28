@@ -106,4 +106,465 @@ work> db.employees.find() //4 documents found in the employees collection
     gpa: 3.9
   }
 ]
+work> db.employees.insertOne({name:"Larry Xu", age:44, gpa: 3.5, fullTime: false, startDate: new Date("2022-01-02"),endDate: null, majors:["stats","cs"],address:{street:"123 Fake St.",city:"Fake City",zip:12345}}) //inserting various datatypes 
+{
+  acknowledged: true,
+  insertedId: ObjectId('656546edd94bf142291300d8')
+}
+work> db.employees.find()
+[
+  {
+    _id: ObjectId('656543dbd94bf142291300d4'),
+    name: 'Tom',
+    age: 33,
+    gpa: 3.2
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d6'),
+    name: 'Harry',
+    age: 30,
+    gpa: 2.8
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9
+  },
+  {
+    _id: ObjectId('656546edd94bf142291300d8'),
+    name: 'Larry Xu',
+    age: 44,
+    gpa: 3.5,
+    fullTime: false,
+    startDate: ISODate('2022-01-02T00:00:00.000Z'),
+    endDate: null,
+    majors: [ 'stats', 'cs' ],
+    address: { street: '123 Fake St.', city: 'Fake City', zip: 12345 }
+  }
+]
+work> db.employees.find().sort({name:1}) //sort documents by name in alphabetical order
+[
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d6'),
+    name: 'Harry',
+    age: 30,
+    gpa: 2.8
+  },
+  {
+    _id: ObjectId('656546edd94bf142291300d8'),
+    name: 'Larry Xu',
+    age: 44,
+    gpa: 3.5,
+    fullTime: false,
+    startDate: ISODate('2022-01-02T00:00:00.000Z'),
+    endDate: null,
+    majors: [ 'stats', 'cs' ],
+    address: { street: '123 Fake St.', city: 'Fake City', zip: 12345 }
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9
+  },
+  {
+    _id: ObjectId('656543dbd94bf142291300d4'),
+    name: 'Tom',
+    age: 33,
+    gpa: 3.2
+  }
+]
+work> db.employees.find().sort({name:-1}) //sort documents by name in reverse alphabetical order
+[
+  {
+    _id: ObjectId('656543dbd94bf142291300d4'),
+    name: 'Tom',
+    age: 33,
+    gpa: 3.2
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9
+  },
+  {
+    _id: ObjectId('656546edd94bf142291300d8'),
+    name: 'Larry Xu',
+    age: 44,
+    gpa: 3.5,
+    fullTime: false,
+    startDate: ISODate('2022-01-02T00:00:00.000Z'),
+    endDate: null,
+    majors: [ 'stats', 'cs' ],
+    address: { street: '123 Fake St.', city: 'Fake City', zip: 12345 }
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d6'),
+    name: 'Harry',
+    age: 30,
+    gpa: 2.8
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5
+  }
+]
+work> db.employees.find().sort({gpa:1}) //sort documents by gpa in ascending  order
+[
+  {
+    _id: ObjectId('656544fcd94bf142291300d6'),
+    name: 'Harry',
+    age: 30,
+    gpa: 2.8
+  },
+  {
+    _id: ObjectId('656543dbd94bf142291300d4'),
+    name: 'Tom',
+    age: 33,
+    gpa: 3.2
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5
+  },
+  {
+    _id: ObjectId('656546edd94bf142291300d8'),
+    name: 'Larry Xu',
+    age: 44,
+    gpa: 3.5,
+    fullTime: false,
+    startDate: ISODate('2022-01-02T00:00:00.000Z'),
+    endDate: null,
+    majors: [ 'stats', 'cs' ],
+    address: { street: '123 Fake St.', city: 'Fake City', zip: 12345 }
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9
+  }
+]
+work> db.employees.find().limit(2)  //limit the amount of documents that are returned
+[
+  {
+    _id: ObjectId('656543dbd94bf142291300d4'),
+    name: 'Tom',
+    age: 33,
+    gpa: 3.2
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5
+  }
+]
+work> db.employees.find().sort({gpa:-1}).limit(1) //who has the highest gpa?
+[
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9
+  }
+]
+work> db.employees.find({name:"Bob"}) //returns any document with first name Bob
+[
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5
+  }
+]
+work> db.employees.find({gpa:3.9}) //returns any document with gpa 3.9
+[
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9
+  }
+]
+work> db.employees.find({fullTime:false}) //returns any document with fulltime false
+[
+  {
+    _id: ObjectId('656546edd94bf142291300d8'),
+    name: 'Larry Xu',
+    age: 44,
+    gpa: 3.5,
+    fullTime: false,
+    startDate: ISODate('2022-01-02T00:00:00.000Z'),
+    endDate: null,
+    majors: [ 'stats', 'cs' ],
+    address: { street: '123 Fake St.', city: 'Fake City', zip: 12345 }
+  }
+]
+work> db.employees.find({gpa:3.5,fullTime:false}) //returns any document with gpa 3.5 and with fulltime false
+[
+  {
+    _id: ObjectId('656546edd94bf142291300d8'),
+    name: 'Larry Xu',
+    age: 44,
+    gpa: 3.5,
+    fullTime: false,
+    startDate: ISODate('2022-01-02T00:00:00.000Z'),
+    endDate: null,
+    majors: [ 'stats', 'cs' ],
+    address: { street: '123 Fake St.', city: 'Fake City', zip: 12345 }
+  }
+]
+work> db.employees.find({},{name:true}) //return all documents but only the names in them. the syntax is .find({query},{projection})
+[
+  { _id: ObjectId('656543dbd94bf142291300d4'), name: 'Tom' },
+  { _id: ObjectId('656544fcd94bf142291300d5'), name: 'Bob' },
+  { _id: ObjectId('656544fcd94bf142291300d6'), name: 'Harry' },
+  { _id: ObjectId('656544fcd94bf142291300d7'), name: 'Sandy' },
+  { _id: ObjectId('656546edd94bf142291300d8'), name: 'Larry Xu' }
+]
+work> db.employees.find({},{_id:false,name:true}) 
+[
+  { name: 'Tom' },
+  { name: 'Bob' },
+  { name: 'Harry' },
+  { name: 'Sandy' },
+  { name: 'Larry Xu' }
+]
+work> db.employees.find({},{_id:false,name:true,gpa:true}) 
+[
+  { name: 'Tom', gpa: 3.2 },
+  { name: 'Bob', gpa: 3.5 },
+  { name: 'Harry', gpa: 2.8 },
+  { name: 'Sandy', gpa: 3.9 },
+  { name: 'Larry Xu', gpa: 3.5 }
+]
+work> db.employees.updateOne({name:"Tom"},{$set:{fullTime:true}}) // the syntax is .updateOne(filter,update)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+work> db.employees.find({name:"Tom"})
+[
+  {
+    _id: ObjectId('656543dbd94bf142291300d4'),
+    name: 'Tom',
+    age: 33,
+    gpa: 3.2,
+    fullTime: true
+  }
+]
+work> db.employees.updateOne({_id: ObjectId('656543dbd94bf142291300d4')},{$set:{fullTime:false}}) // get document with that id and update)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+work> db.employees.find({_id: ObjectId('656543dbd94bf142291300d4')})
+[
+  {
+    _id: ObjectId('656543dbd94bf142291300d4'),
+    name: 'Tom',
+    age: 33,
+    gpa: 3.2,
+    fullTime: false
+  }
+]
+work> db.employees.updateOne({_id: ObjectId('656543dbd94bf142291300d4')},{$unset:{fullTime:""}}) //get rid of fullTime field for Tom
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+work> db.employees.find({_id: ObjectId('656543dbd94bf142291300d4')})
+[
+  {
+    _id: ObjectId('656543dbd94bf142291300d4'),
+    name: 'Tom',
+    age: 33,
+    gpa: 3.2
+  }
+]
+work> db.employees.updateMany({},{$set:{fullTime:false}}) //for all document, set fullTime as false. If there is no such field, it will create one 
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 5,
+  modifiedCount: 4,
+  upsertedCount: 0
+}
+work> db.employees.find()
+[
+  {
+    _id: ObjectId('656543dbd94bf142291300d4'),
+    name: 'Tom',
+    age: 33,
+    gpa: 3.2,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d6'),
+    name: 'Harry',
+    age: 30,
+    gpa: 2.8,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656546edd94bf142291300d8'),
+    name: 'Larry Xu',
+    age: 44,
+    gpa: 3.5,
+    fullTime: false,
+    startDate: ISODate('2022-01-02T00:00:00.000Z'),
+    endDate: null,
+    majors: [ 'stats', 'cs' ],
+    address: { street: '123 Fake St.', city: 'Fake City', zip: 12345 }
+  }
+]
+work> db.employees.updateOne({name:"Bob"},{$unset:{fullTime:""}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+work> db.employees.updateOne({name:"Sandy"},{$unset:{fullTime:""}}) 
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+work> db.employees.find()
+[
+  {
+    _id: ObjectId('656543dbd94bf142291300d4'),
+    name: 'Tom',
+    age: 33,
+    gpa: 3.2,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d6'),
+    name: 'Harry',
+    age: 30,
+    gpa: 2.8,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9
+  },
+  {
+    _id: ObjectId('656546edd94bf142291300d8'),
+    name: 'Larry Xu',
+    age: 44,
+    gpa: 3.5,
+    fullTime: false,
+    startDate: ISODate('2022-01-02T00:00:00.000Z'),
+    endDate: null,
+    majors: [ 'stats', 'cs' ],
+    address: { street: '123 Fake St.', city: 'Fake City', zip: 12345 }
+  }
+]
+work> db.employees.updateMany({fullTime:{$exists:false}},{$set:{fullTime:true}}) //for document where fullTime does not exist, set fullTime as true
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+work> db.employees.find()
+[
+  {
+    _id: ObjectId('656543dbd94bf142291300d4'),
+    name: 'Tom',
+    age: 33,
+    gpa: 3.2,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5,
+    fullTime: true
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d6'),
+    name: 'Harry',
+    age: 30,
+    gpa: 2.8,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9,
+    fullTime: true
+  },
+  {
+    _id: ObjectId('656546edd94bf142291300d8'),
+    name: 'Larry Xu',
+    age: 44,
+    gpa: 3.5,
+    fullTime: false,
+    startDate: ISODate('2022-01-02T00:00:00.000Z'),
+    endDate: null,
+    majors: [ 'stats', 'cs' ],
+    address: { street: '123 Fake St.', city: 'Fake City', zip: 12345 }
+  }
+]
+work> 
 
