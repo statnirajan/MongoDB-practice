@@ -1,2 +1,2 @@
 # MongoDB-practice
-This repository contains my codes from a practice session on fundamentals of MongoDB. Here I created a database with a collection and add documents in it. Basic operations such as show, find, update, delete are performed. 
+This repository contains my codes from a practice session on fundamentals of MongoDB. Here I created a database with a collection and add documents in it. Basic operations such as show, find, update, delete are performed. Next, comparison operators such as greater than, less than, greater than equals to, less than equals to are used to return documents. Logical operators AND, OR, NOR, NOT are also used.
