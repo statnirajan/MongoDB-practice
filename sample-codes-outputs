@@ -566,5 +566,323 @@ work> db.employees.find()
     address: { street: '123 Fake St.', city: 'Fake City', zip: 12345 }
   }
 ]
-work> 
+work> db.employees.deleteOne({name:"Larry Xu"})
+{ acknowledged: true, deletedCount: 1 }
+work> db.employees.find()
+[
+  {
+    _id: ObjectId('656543dbd94bf142291300d4'),
+    name: 'Tom',
+    age: 33,
+    gpa: 3.2,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5,
+    fulltime: true
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d6'),
+    name: 'Harry',
+    age: 30,
+    gpa: 2.8,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9,
+    fulltime: true
+  }
+]
+work> db.employees.deleteMany({fullTime:false})
+{ acknowledged: true, deletedCount: 2 }
+work> db.employees.find()
+[
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5,
+    fulltime: true
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9,
+    fulltime: true
+  }
+]
+work> db.employees.deleteMany({registerDate:{$exists:false}}) //if registerDate field does not exist, delete that document
+{ acknowledged: true, deletedCount: 2 }
+work> db.employees.find() //nothing returns, this is now empty
+
+******* note that the mongocompass and vsc are connected. export/import document can work easily using compass. since they are connected it is not a problem to continue working in vsc *********
+Comparison Operators: Denoted with a $ sign
+
+work> db.employees.find({name:{$ne:'Tom'}}) //find every document that has name not equal to Tom
+[
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5,
+    fulltime: true
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d6'),
+    name: 'Harry',
+    age: 30,
+    gpa: 2.8,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9,
+    fulltime: true
+  },
+  {
+    _id: ObjectId('656546edd94bf142291300d8'),
+    name: 'Larry Xu',
+    age: 44,
+    gpa: 3.5,
+    fullTime: false,
+    startDate: ISODate('2022-01-02T00:00:00.000Z'),
+    endDate: null,
+    majors: [ 'stats', 'cs' ],
+    address: { street: '123 Fake St.', city: 'Fake City', zip: 12345 }
+  }
+]
+work> db.employees.find({age:{$lt:25}}) //age less than 25 
+[
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5,
+    fulltime: true
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9,
+    fulltime: true
+  }
+]
+work> db.employees.find({age:{$gt:25}}) //age greater than 25 
+[
+  {
+    _id: ObjectId('656543dbd94bf142291300d4'),
+    name: 'Tom',
+    age: 33,
+    gpa: 3.2,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d6'),
+    name: 'Harry',
+    age: 30,
+    gpa: 2.8,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656546edd94bf142291300d8'),
+    name: 'Larry Xu',
+    age: 44,
+    gpa: 3.5,
+    fullTime: false,
+    startDate: ISODate('2022-01-02T00:00:00.000Z'),
+    endDate: null,
+    majors: [ 'stats', 'cs' ],
+    address: { street: '123 Fake St.', city: 'Fake City', zip: 12345 }
+  }
+]
+work> db.employees.find({age:{$gte:33}}) //age greater than or equals 33
+[
+  {
+    _id: ObjectId('656543dbd94bf142291300d4'),
+    name: 'Tom',
+    age: 33,
+    gpa: 3.2,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656546edd94bf142291300d8'),
+    name: 'Larry Xu',
+    age: 44,
+    gpa: 3.5,
+    fullTime: false,
+    startDate: ISODate('2022-01-02T00:00:00.000Z'),
+    endDate: null,
+    majors: [ 'stats', 'cs' ],
+    address: { street: '123 Fake St.', city: 'Fake City', zip: 12345 }
+  }
+]
+work> db.employees.find({gpa:{$gte:3,$lte:4}}) //documents with gpa between 3 and 4, inclusive
+[
+  {
+    _id: ObjectId('656543dbd94bf142291300d4'),
+    name: 'Tom',
+    age: 33,
+    gpa: 3.2,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5,
+    fulltime: true
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9,
+    fulltime: true
+  },
+  {
+    _id: ObjectId('656546edd94bf142291300d8'),
+    name: 'Larry Xu',
+    age: 44,
+    gpa: 3.5,
+    fullTime: false,
+    startDate: ISODate('2022-01-02T00:00:00.000Z'),
+    endDate: null,
+    majors: [ 'stats', 'cs' ],
+    address: { street: '123 Fake St.', city: 'Fake City', zip: 12345 }
+  }
+]
+work> db.employees.find({name:{$in:['Tom','Harry']}}) //any document with name Tom or Harry
+[
+  {
+    _id: ObjectId('656543dbd94bf142291300d4'),
+    name: 'Tom',
+    age: 33,
+    gpa: 3.2,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d6'),
+    name: 'Harry',
+    age: 30,
+    gpa: 2.8,
+    fullTime: false
+  }
+]
+work> db.employees.find({name:{$nin:['Tom','Harry']}}) //any document with name not Tom or Harry
+[
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5,
+    fulltime: true
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9,
+    fulltime: true
+  },
+  {
+    _id: ObjectId('656546edd94bf142291300d8'),
+    name: 'Larry Xu',
+    age: 44,
+    gpa: 3.5,
+    fullTime: false,
+    startDate: ISODate('2022-01-02T00:00:00.000Z'),
+    endDate: null,
+    majors: [ 'stats', 'cs' ],
+    address: { street: '123 Fake St.', city: 'Fake City', zip: 12345 }
+  }
+]
+work> db.employees.find({$and:[{fulltime:true},{age:{$lte:23}}]}) //return those documents where both criteria are satisfied
+[
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5,
+    fulltime: true
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9,
+    fulltime: true
+  }
+]
+work> db.employees.find({$or:[{fulltime:true},{age:{$lte:32}}]}) //return those documents where either is true
+[
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5,
+    fulltime: true
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d6'),
+    name: 'Harry',
+    age: 30,
+    gpa: 2.8,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9,
+    fulltime: true
+  }
+]
+work> db.employees.find({$nor:[{fulltime:true},{age:{$lte:32}}]}) //return those documents where neither is true
+[
+  {
+    _id: ObjectId('656543dbd94bf142291300d4'),
+    name: 'Tom',
+    age: 33,
+    gpa: 3.2,
+    fullTime: false
+  },
+  {
+    _id: ObjectId('656546edd94bf142291300d8'),
+    name: 'Larry Xu',
+    age: 44,
+    gpa: 3.5,
+    fullTime: false,
+    startDate: ISODate('2022-01-02T00:00:00.000Z'),
+    endDate: null,
+    majors: [ 'stats', 'cs' ],
+    address: { street: '123 Fake St.', city: 'Fake City', zip: 12345 }
+  }
+]
+work> db.employees.find({age:{$not:{$gte:30}}}) //return those documents where age not gte to 30. There could be another simpler way, but this is useful even when age is NULL. 
+[
+  {
+    _id: ObjectId('656544fcd94bf142291300d5'),
+    name: 'Bob',
+    age: 21,
+    gpa: 3.5,
+    fulltime: true
+  },
+  {
+    _id: ObjectId('656544fcd94bf142291300d7'),
+    name: 'Sandy',
+    age: 19,
+    gpa: 3.9,
+    fulltime: true
+  }
+]
 
